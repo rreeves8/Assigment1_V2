@@ -1,32 +1,21 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform Target, Player;
+    public GameObject player;
 
-    public float rotateSpeed = 1;
-
-    private float mouseX, mouseY;
-
+    private Vector3 offset;
 
     void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
+        offset = transform.position - player.transform.position;
     }
 
-    void LateUpdate()
+
+    void Update()
     {
-        mouseX += (Input.GetAxis("Mouse X")  * rotateSpeed);
-        mouseY -= (Input.GetAxis("Mouse Y") * rotateSpeed);
-
-        mouseY = Mathf.Clamp(mouseY, -35, 60);
-
-        Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-        Player.rotation = Quaternion.Euler(0, mouseX, 0);
-
+        transform.position = player.transform.position + offset;
     }
 }
+
